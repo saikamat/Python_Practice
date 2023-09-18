@@ -135,3 +135,63 @@ test_specific_tests_only.py::test_SquarePolygons PASSED
 
 ====================================== 1 passed, 1 deselected in 0.00s =======================================
 ```
+
+### 2.4 To `pyrtest` only specific commands based on certain conditions
+
+#### 2.4.1 Skip a test function entirely
+Input command `@pytest.mark.skip` above the test function that is to be skipped in the tests
+```
+@pytest.mark.skip
+def foo():
+    # do something
+```
+
+Sample Output log
+```
+╭─    ~/Lo/p/i/Sama/Python_Practice/pytests    master !1 ───────── 1 ✘  script_env   20:03:06  ─╮
+╰─ pytest test_specific_tests_only.py -v -s                                                                ─╯
+============================================ test session starts =============================================
+platform darwin -- Python 3.9.6, pytest-7.4.2, pluggy-1.3.0 -- /Users/saikamat/Local Documents/scripts/script_env/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/saikamat/Local Documents/personal_docs/interviews/Sama/Python_Practice/pytests
+collected 2 items                                                                                            
+
+test_specific_tests_only.py::test_SquarePolygons FAILED
+test_specific_tests_only.py::test_SignCheck SKIPPED (unconditional skip)
+
+================================================== FAILURES ==================================================
+____________________________________________ test_SquarePolygons _____________________________________________
+
+    def test_SquarePolygons():
+        ax = 0
+        ay = 0
+        bx = 0
+```
+
+
+##### 2.4.2 Test a test function but ignore the results
+Sometimes, the variables inside a test function are crucial to other tests. However it may be possible that that function might be completely buggy. In such scenarios, though the test function will fail, we need the variables. Here a mere `skip` will **not help***.
+
+Therefore use `@pytest.mark.xfail`
+
+```
+@pytest.mark.xfail
+def foo():
+    # do something
+```
+
+Sample output log
+```
+─    ~/Lo/p/interviews/Sama/Python_Practice/pytests    master !2 ── ✔  script_env   20:08:59  ─╮
+╰─ pytest test_specific_tests_only.py -v -s                                                                ─╯
+============================================ test session starts =============================================
+platform darwin -- Python 3.9.6, pytest-7.4.2, pluggy-1.3.0 -- /Users/saikamat/Local Documents/scripts/script_env/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/saikamat/Local Documents/personal_docs/interviews/Sama/Python_Practice/pytests
+collected 2 items                                                                                            
+
+test_specific_tests_only.py::test_SquarePolygons XFAIL
+test_specific_tests_only.py::test_SignCheck SKIPPED (unconditional skip)
+
+======================================= 1 skipped, 1 xfailed in 0.02s ========================================
+```
