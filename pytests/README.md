@@ -169,6 +169,9 @@ test_specific_tests_only.py::test_SignCheck SKIPPED (unconditional skip)
 
 Use the `@pytest.fixture()` command
 
+
+> `fixture()` is used as a setup and tear down method for test cases. Add the `fixture()` before a config method and make it available to all test case methods.
+
 So in the below code, the `intial_function()` will be executed before the `test_initial_function()`
 ```
 @pytest.fixture()
